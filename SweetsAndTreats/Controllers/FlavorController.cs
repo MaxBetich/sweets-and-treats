@@ -93,5 +93,92 @@ namespace SweetsAndTreats.Controllers
         return RedirectToAction("Details", new {id = thisFlavor.FlavorId});
       }
     }
+
+    [HttpPost]
+    public ActionResult Edit(Flavor flavor)
+    {
+      _db.Flavors.Update(flavor);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    public async Task<ActionResult> Delete(int id)
+    {
+      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+
+      Flavor thisFlavor = _db.Flavors.FirstOrDefault(flavor => flavor.FlavorId == id);
+      if (thisFlavor.User == currentUser)
+      {
+        return View(thisFlavor);
+      }
+      else
+      {
+        ModelState.AddModelError("Only the user who created a flavor may remove it","");
+        return RedirectToAction("Details", new {id = thisFlavor.FlavorId});
+      } 
+    }
+
+    [HttpPost, ActionName("Delete")]
+    public ActionResult DeleteConfirmed(int id)
+    {
+      Flavor thisFlavor = _db.Flavors.FirstOrDefault(flavor => flavor.FlavorId == id);
+      _db.Flavors.Remove(thisFlavor);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    public async Task<ActionResult> AddTreat(int id)
+    {
+      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+
+      List<Treat> userTreats = _db.Treats
+                                .Where(entry =>entry.User.Id == currentUser.Id)
+                                .OrderBy(treat => treat.TreatName)
+                                .ToList();
+
+      Flavor thisFlavor = _db.Flavors.FirstOrDefault(flavor => flavor.FlavorId == id);
+      
+      ViewBag.TreatId = new SelectList(userTreats, "TreatId", "TreatName");
+      
+      return View(thisFlavor);
+    }
+
+    [HttpPost]
+    public ActionResult AddTreat(Flavor flavor, int treatId)
+    {
+      #nullable enable
+      FlavorTreat? joinEntity = _db.FlavorTreats.FirstOrDefault(join => (join.TreatId == treatId && join.FlavorId == flavor.FlavorId));
+      #nullable disable
+
+      if (joinEntity == null && treatId != 0)
+      {
+        _db.FlavorTreats.Add(new FlavorTreat() { TreatId = treatId, FlavorId = flavor.FlavorId });
+        _db.SaveChanges();
+      }
+
+      return RedirectToAction("Details", new { id = flavor.FlavorId });
+    } 
+
+    [HttpPost]
+    public async Task<ActionResult> DeleteJoin(int joinId)
+    {
+      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
+
+      FlavorTreat joinEntry = _db.FlavorTreats.FirstOrDefault(entry => entry.FlavorTreatId == joinId);
+      Flavor thisFlavor = _db.Flavors.FirstOrDefault(entry => entry.FlavorId == joinEntry.FlavorId);
+      if (thisFlavor.User == currentUser)
+      {
+        _db.FlavorTreats.Remove(joinEntry);
+        _db.SaveChanges();
+        return RedirectToAction("Details", new {id = thisFlavor.FlavorId});
+      }
+      else
+      {
+        return RedirectToAction("Details", new {id = thisFlavor.FlavorId});
+      }
+    }
   }
 }
