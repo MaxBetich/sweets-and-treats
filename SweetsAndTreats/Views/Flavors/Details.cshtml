@@ -8,6 +8,7 @@
 <h2>Flavor Details</h2>
 <hr />
 <h3>Flavor Name: @Html.DisplayFor(model => model.FlavorName)</h3>
+<h5>Note: Only the user who added this flavor may edit or remove it!</h5>
 
 <p>@Html.ValidationMessageFor(m=>m.FlavorName,"", new {@class = "text-danger", @style = "font-weight: 600;"})</p>
 
@@ -17,22 +18,24 @@
 }
 else
 {
-  <h4>Treats this flavor is associated with:</h4>
-  <ul>
-  @foreach(FlavorTreat join in Model.JoinEntities)
-  {
-    <li>@join.Treat.TreatName</li>
-
-    @using (Html.BeginForm("DeleteJoin", "Flavors"))
-    {
-      @Html.Hidden("joinId", @join.FlavorTreatId)
-      @if (User.Identity.IsAuthenticated)
+  <div class="box">
+    <h4>Treats this flavor is associated with:</h4>
+    <ul>
+      @foreach(FlavorTreat join in Model.JoinEntities)
       {
-        <input type="submit" value="Remove"/>
+        <li>@join.Treat.TreatName</li>
+
+        @using (Html.BeginForm("DeleteJoin", "Flavors"))
+        {
+          @Html.Hidden("joinId", @join.FlavorTreatId)
+          @if (User.Identity.IsAuthenticated)
+          {
+            <input type="submit" value="Remove"/>
+          }
+        }
       }
-    }
-  }
-  </ul>
+    </ul>
+  </div>
 }
 
 <p>@Html.ActionLink("Back to list", "Index")</p>

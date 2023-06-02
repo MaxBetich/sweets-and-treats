@@ -8,14 +8,16 @@
 
 <h4>Add a flavor to be associated with this treat: @Html.DisplayFor(model => model.TreatName)</h4>
 
-@using (Html.BeginForm())
-{
-    @Html.HiddenFor(model => model.TreatId)
+<div class="box">
+  @using (Html.BeginForm())
+  {
+      @Html.HiddenFor(model => model.TreatId)
 
-    @Html.Label("Select Flavor")
-    @Html.DropDownList("FlavorId")
+      @Html.Label("Select Flavor")
+      @Html.DropDownList("FlavorId")
 
-    <input type="submit" value="Save" />
-}
+      <input type="submit" value="Save" />
+  }
+</div>
 
 <p>@Html.ActionLink("Back to list", "Index")</p>

@@ -2,6 +2,36 @@ body {
 	background-color: antiquewhite;
 }
 
+h1 {
+  margin: 1%;
+  color: blue;
+}
+
+h2 {
+  margin: 1%;
+  color: purple;
+}
+
+h3 {
+  margin: 1%;
+  color: green;
+}
+
+h4 {
+  margin: 1%;
+  color: deeppink;
+}
+
+h5 {
+  margin: 1%;
+  color: red;
+}
+
+.box {
+  border: dashed gold;
+  margin: 5px;
+  padding: 1%;
+}
 .navbar {
 	background-color: #e3f2fd;
 }

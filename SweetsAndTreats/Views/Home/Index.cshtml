@@ -56,6 +56,7 @@
 <h1 id="header">Welcome Pierre's Sweet and Savory Treats</h1>
 <hr>
 <h4>Treats</h4>
+<div class="box">
 @if (Model["treats"].Length == 0)
 {
   <p>No treats have been added yet!</p>
@@ -66,19 +67,21 @@
     <li>@Html.ActionLink(@treat.TreatName, "Details", "Treats", new { id = @treat.TreatId})</li>
   }
 </ul>
+</div>
 <hr>
 <h4>Flavors</h4>
-@if (Model["flavors"].Length == 0)
-{
-  <p>No flavors have been added yet!</p>
-} 
-<ul>
-  @foreach (Flavor flav in Model["flavors"])
+<div class="box">
+  @if (Model["flavors"].Length == 0)
   {
-    <li>@Html.ActionLink(@flav.FlavorName, "Details", "Flavors", new { id = @flav.FlavorId})</li>
-  }
-</ul>
-
+    <p>No flavors have been added yet!</p>
+  } 
+  <ul>
+    @foreach (Flavor flav in Model["flavors"])
+    {
+      <li>@Html.ActionLink(@flav.FlavorName, "Details", "Flavors", new { id = @flav.FlavorId})</li>
+    }
+  </ul>
+</div>
 <hr>
 @if (User.Identity.IsAuthenticated)
 {

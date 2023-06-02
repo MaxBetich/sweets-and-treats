@@ -8,12 +8,13 @@
 
 <p>@Html.ValidationMessageFor(m=>m.FlavorName,"", new {@class = "text-danger", @style = "font-weight: 600;"})</p>
 
-@using (Html.BeginForm())
-{
-  @Html.HiddenFor(m => m.FlavorId)
+<div class="box">
+  @using (Html.BeginForm())
+  {
+    @Html.HiddenFor(m => m.FlavorId)
 
-  <p>Flavor Name: @Html.EditorFor(model => model.FlavorName)</p>
-  <input type="submit" value="Save Changes" class="btn btn-default" />
-}
-
+    <p>Flavor Name: @Html.EditorFor(model => model.FlavorName)</p>
+    <input type="submit" value="Save Changes" class="btn btn-default" />
+  }
+</div>
 <p>@Html.ActionLink("Back to flavors","Index")<p>

@@ -13,17 +13,17 @@
 {
   @Html.ValidationSummary("Please fix the following error(s) and then resubmit the form:") 
 }
+<div class="box">
+  @using (Html.BeginForm())
+  {
+    @Html.LabelFor(m => m.Email)
+    @Html.TextBoxFor(m => m.Email)
 
-@using (Html.BeginForm())
-{
-  @Html.LabelFor(m => m.Email)
-  @Html.TextBoxFor(m => m.Email)
+    @Html.LabelFor(m => m.Password)
+    @Html.EditorFor(m => m.Password)
 
-  @Html.LabelFor(m => m.Password)
-  @Html.EditorFor(m => m.Password)
-
-  <input type="submit" value="Log in" />
-}
-
+    <input type="submit" value="Log in" />
+  }
+</div>
 <p>@Html.ActionLink("Register for an account", "Register")</p>
 <p>@Html.ActionLink("Back to accounts page", "Index")</p>

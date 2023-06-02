@@ -8,11 +8,12 @@
 
 <p>@Html.ValidationMessageFor(m=>m.TreatName,"", new {@class = "text-danger", @style = "font-weight: 600;"})</p>
 
+<div class="box">
 @using (Html.BeginForm())
-{
-  <p>Treat Name: @Html.TextBoxFor(model => model.TreatName)</p>
+  {
+    <p>Treat Name: @Html.TextBoxFor(model => model.TreatName)</p>
 
-  <input type="submit" value="Add new treat" class="btn btn-default" />
-}
-
+    <input type="submit" value="Add new treat" class="btn btn-default" />
+  }
+</div>
 <p>@Html.ActionLink("Show all treats", "Index")</p>
