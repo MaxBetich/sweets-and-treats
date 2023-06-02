@@ -89,7 +89,6 @@ namespace SweetsAndTreats.Controllers
       }
       else
       {
-        ModelState.AddModelError("Only the user who created a flavor may remove it","");
         return RedirectToAction("Details", new {id = thisFlavor.FlavorId});
       }
     }
@@ -114,7 +113,6 @@ namespace SweetsAndTreats.Controllers
       }
       else
       {
-        ModelState.AddModelError("Only the user who created a flavor may remove it","");
         return RedirectToAction("Details", new {id = thisFlavor.FlavorId});
       } 
     }
