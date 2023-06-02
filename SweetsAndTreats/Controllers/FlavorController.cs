@@ -13,11 +13,11 @@ using System.Security.Claims;
 namespace SweetsAndTreats.Controllers
 {
   [Authorize]
-  public class FlavorController : Controller
+  public class FlavorsController : Controller
   {
     private readonly SweetsAndTreatsContext _db;
     private readonly UserManager<ApplicationUser> _userManager;
-    public FlavorController(UserManager<ApplicationUser> userManager, SweetsAndTreatsContext db)
+    public FlavorsController(UserManager<ApplicationUser> userManager, SweetsAndTreatsContext db)
     {
       _userManager = userManager;
 
@@ -71,9 +71,9 @@ namespace SweetsAndTreats.Controllers
     public ActionResult Details(int id)
     {
       Flavor thisFlavor = _db.Flavors
-                             .Include(flavor => flavor.JoinEntities)
-                             .ThenInclude(join => join.Treat)
-                             .FirstOrDefault(flavor => flavor.FlavorId == id);
+                            .Include(flavor => flavor.JoinEntities)
+                            .ThenInclude(join => join.Treat)
+                            .FirstOrDefault(flavor => flavor.FlavorId == id);
       return View(thisFlavor);
     }
 
@@ -134,9 +134,9 @@ namespace SweetsAndTreats.Controllers
       ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
 
       List<Treat> userTreats = _db.Treats
-                                .Where(entry =>entry.User.Id == currentUser.Id)
-                                .OrderBy(treat => treat.TreatName)
-                                .ToList();
+                                  .Where(entry =>entry.User.Id == currentUser.Id)
+                                  .OrderBy(treat => treat.TreatName)
+                                  .ToList();
 
       Flavor thisFlavor = _db.Flavors.FirstOrDefault(flavor => flavor.FlavorId == id);
       
